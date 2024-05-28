@@ -1,7 +1,29 @@
+using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using WebElektronika.az.Business.Abstract;
+using WebElektronika.az.Business.Concrete;
+using WebElektronika.az.Business.Config;
+using WebElektronika.az.Models.Context;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+//DataBase
+builder.Services.AddDbContext<AppDBContext>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("DataConnection")
+));
+
+//Automapper
+var mappingConfig = new MapperConfiguration(mc =>
+{
+    mc.AddProfile(new MapperProfile());
+});
+builder.Services.AddSingleton(mappingConfig.CreateMapper());
+
+//Services
+builder.Services.AddScoped<ITechnologyService, TechnologyService>();
 
 var app = builder.Build();
 
