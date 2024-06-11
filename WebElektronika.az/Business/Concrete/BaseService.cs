@@ -21,14 +21,14 @@ namespace WebElektronika.az.Business.Concrete
 
         public void Delete(int id)
         {
-            var ent = _dBSet.Find(id);
-            _dBSet.Remove(ent);
-            _dBContext.SaveChanges();
+            var ent = _dBSet.Find(id);//id ni axtar tap
+            _dBSet.Remove(ent); //id sil
+            _dBContext.SaveChanges(); //yadda saxla
         }
 
         public List<RsDTO> GetAll()
         {
-            var ent = _dBSet.ToList();
+            var ent = _dBSet.ToList(); //select
             var rsdto = _mapper.Map<List<RsDTO>>(ent);
             return rsdto;
         }
